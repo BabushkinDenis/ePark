@@ -1,0 +1,176 @@
+@import "1_vars.scss";
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body, html {
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
+}
+
+/* Portrait layout (default) */
+.app {
+    height: 100%;
+    width: 100%;     
+    overflow: auto;                         /* offset horizontal: half of text area width */
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+      
+    }
+}
+
+input, textarea {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+button {
+    background: $blue;
+    color:$white;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 52px;
+    text-align: center;
+    border: none;
+    @include border-radius(3px); 
+    font-size: 16px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+
+
+
+@font-face {
+  font-family: 'icon';
+  src:  url('../fonts/icon/icomoon.eot?1y56eejx');
+  src:  url('../fonts/icon/icomoon.eot?1y56ejex#iefix') format('embedded-opentype'),
+    url('../fonts/icon/icomoon.ttf?1y5j6eex') format('truetype'),
+    url('../fonts/icon/icomoon.woff?1yj56eex') format('woff'),
+    url('../fonts/icon/icomoon.svg?1y5g6eex#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  
+  &:before {
+      font-family: 'icon' !important;
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+
+.icon-pin2:before {
+  content: "\e917";
+}
+
+.icon-filter:before {
+  content: "\e916";
+}
+
+.icon-navigate:before {
+  content: "\e911";
+}
+.icon-share2:before {
+  content: "\e912";
+}
+.icon-circle:before {
+  content: "\e913";
+}
+.icon-e:before {
+  content: "\e914";
+}
+.icon-dotes:before {
+  content: "\e915";
+}
+.icon-clock2:before {
+  content: "\e910";
+}
+
+.icon-location:before {
+  content: "\e90f";
+}
+.icon-share:before {
+  content: "\e903";
+}
+.icon-pin:before {
+  content: "\e904";
+}
+.icon-phone:before {
+  content: "\e905";
+}
+.icon-man:before {
+  content: "\e906";
+}
+.icon-feed-back:before {
+  content: "\e907";
+}
+.icon-f:before {
+  content: "\e908";
+}
+.icon-dollar:before {
+  content: "\e909";
+}
+.icon-clock:before {
+  content: "\e90a";
+}
+.icon-car2:before {
+  content: "\e90b";
+}
+.icon-bag:before {
+  content: "\e90c";
+}
+.icon-route:before {
+  content: "\e90d";
+}
+.icon-search:before {
+  content: "\e90e";
+}
+.icon-car:before {
+  content: "\e900";
+}
+.icon-jeep:before {
+  content: "\e901";
+}
+.icon-moto:before {
+  content: "\e902";
+}
