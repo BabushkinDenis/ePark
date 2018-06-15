@@ -3,14 +3,17 @@ import style from './page.scss';
 //import Photo from "./photo.js";
 import $ from 'jquery';
 
-class Page {
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactTimeWork from './timework.jsx';
+import Event from '../event';
+class Page extends Event {
     constructor () {
+        super();
         console.log("pageInited");
         this.wrapper = $("#page");
-        this.data = {
-            photous: {}
-        };
-
+        this.setData();
+        ReactDOM.render(<ReactTimeWork mode={"24/7"} />, document.getElementById('time-work'));
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     }
     onDeviceReady() {
@@ -21,7 +24,7 @@ class Page {
             mediaType: Camera.MediaType.PICTURE
         }
 
-        $("#fasad-photo-btn").on("click", () => {
+        this.wrapper.find("#fasad-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
                 this.onPhotoDataSuccess(imageData, "FASAD");
             }, function (message){
@@ -29,7 +32,7 @@ class Page {
             }, CAMERA_OPTION);
         });
 
-        $("#price-photo-btn").on("click", () => {
+        this.wrapper.find("#price-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
                 this.onPhotoDataSuccess(imageData, "PRCIE");
             }, function (message) {
@@ -37,12 +40,13 @@ class Page {
             }, CAMERA_OPTION);
         });
 
-        $("#go-back").on("click", () => {
+        this.wrapper.find("#go-back").on("click", () => {
+            this.trigger("closed");
             this.hide();
         })
 
-        $("#send-data").on("click", () => {
-            alert(JSON.stringify(this.data));
+        this.wrapper.find("#send-data").on("click", () => {
+            this.readForm();
         })
     }
 
@@ -54,6 +58,7 @@ class Page {
         alert('Failed because: ' + message);
     }
 
+
     show() {
         this.wrapper.show();
     } 
@@ -61,6 +66,53 @@ class Page {
     hide() {
         this.wrapper.hide();
     }
+
+    setData(data) {
+        this.data = {
+            photous: {}
+        };
+        if(data) {
+            this.data.latLng = data.latLng;
+            this.wrapper.find("#addres-input").val(data.address);
+        }
+        return this;
+    }
+
+    sendData() {
+        var imageURI = this.data.photous.FASAD;
+        var formData = new FormData();
+           
+        if (!imageURI) {
+            alert('Please select an image first.');
+            return;
+        }
+        
+       
+
+        formData.append("username", "Groucho");
+        formData.append("accountnum", 123456); 
+
+        // Файл, выбранный пользователем
+        formData.append("userfile", imageURI);
+
+        // JavaScript Blob объект
+        var content = '<a id="a"><b id="b">hey!</b></a>'; // содержимое нового файла...
+        var blob = new Blob([content], { type: "text/xml" });
+
+        formData.append("webmasterfile", blob);
+
+        var request = new XMLHttpRequest();
+        request.open("POST", "http://api.epark.local/change");
+        request.send(formData);
+        alert("send");
+
+    }
+
+    readForm () {
+        this.sendData();
+        //alert(JSON.stringify(this.data));
+    }
+    
 }
 
 export default Page;

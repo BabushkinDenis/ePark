@@ -24,8 +24,6 @@ import Page from './page/page';
 var $ = require("jquery");
 
 
-
-
 var app = {
     // Application Constructor
     initialize: function() {
@@ -35,9 +33,17 @@ var app = {
     },
 
     bindEvents: function() {
-        this.map.on("geoLocationConfirned", () => {
-            this.page.show();
+        this.map.on("geoLocationConfirned", (data) => {
+            this.page
+                .setData(data)
+                .show();
+
+            this.map.hide();
         });
+
+        this.page.on("closed", () => {
+            this.map.show();
+        })
     }
   
 };

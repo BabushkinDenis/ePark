@@ -19,13 +19,17 @@
       "cordova-plugin-network-information": {},
       "cordova-plugin-vibration": {},
       "cordova-plugin-googlemaps": {
-        "API_KEY_FOR_ANDROID": "AIzaSyC-Adzmgj8YKs7dcP6B-5mIoWy73bbNurw"
+        "API_KEY_FOR_ANDROID": "AIzaSyC-Adzmgj8YKs7dcP6B-5mIoWy73bbNurw",
+        "PLAY_SERVICES_VERSION": "15.0.1",
+        "ANDROID_SUPPORT_V4_VERSION": "27.1.1"
       }
     }
   },
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
     "babel-loader": "^7.1.4",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",

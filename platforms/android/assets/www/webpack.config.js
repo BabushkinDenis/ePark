@@ -27,14 +27,25 @@ var config = {
         loader: 'file-loader?emitFile=false&name=[path][name].[ext]'
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader?cacheDirectory=true',
+        }
+      },
+      {
+        test: /\.(js)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
         }
       }
+    
     ]
 
+  },
+  resolve: {
+    extensions: ['.js', '.json', '.jsx']
   },
   devServer: {
     inline: true,
