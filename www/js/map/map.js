@@ -30,6 +30,7 @@ class Map extends Event  {
                 plugin.google.maps.Geocoder.geocode({
                     "position": latLng.target
                 }, (results) => {
+                    console.log(results);
                     if (results.length === 0) {
                         return;
                     }

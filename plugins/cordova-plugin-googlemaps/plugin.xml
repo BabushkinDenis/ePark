@@ -270,7 +270,7 @@ The native map view is faster, use less network usage, display 3D views, and eve
         https://developers.google.com/android/guides/releases
         -->
         <preference name="ANDROID_SUPPORT_V4_VERSION" default="26.1.0" />
-        <framework src="com.android.support:support-core-utils:26.1.0" />
+        <framework src="com.android.support:support-core-utils:27.1.1" />
 
 
         <!-- Base messages -->

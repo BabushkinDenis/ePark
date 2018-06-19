@@ -42,11 +42,13 @@
       "PLAY_SERVICES_VERSION": "15.0.1",
       "ANDROID_SUPPORT_V4_VERSION": "26.1.0",
       "PACKAGE_NAME": "epark.online"
-    }
-  },
-  "dependent_plugins": {
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "epark.online"
+    },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "epark.online"
     }
-  }
+  },
+  "dependent_plugins": {}
 }

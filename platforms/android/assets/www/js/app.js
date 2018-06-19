@@ -38,11 +38,11 @@ var app = {
                 .setData(data)
                 .show();
 
-            this.map.hide();
+            //this.map.hide();
         });
 
         this.page.on("closed", () => {
-            this.map.show();
+            //this.map.show();
         })
     }
   

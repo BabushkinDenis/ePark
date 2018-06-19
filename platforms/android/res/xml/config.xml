@@ -79,6 +79,9 @@
     <feature name="StreetViewPanorama">
         <param name="android-package" value="plugin.google.maps.PluginStreetViewPanorama" />
     </feature>
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
     <name>e-Park</name>
     <description>
         A blank PhoneGap app.

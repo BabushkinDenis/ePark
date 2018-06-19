@@ -27,17 +27,20 @@
     background: white;
     display: block;
     position: absolute;
-    top: 0px;
+    top: 1000px;
+    
+
     z-index: 1000;
    
 
     &__header {
-        z-index: 1001;
-        position: fixed;
+        box-sizing: border-box;
+        position: absolute;
         top:0px;
         padding: 20px 40px;
         background: white;
         width: 100%;
+        z-index: 100;
         @include box-shadow(0px,0px,15px,1px,0.3);
 
 
@@ -86,7 +89,10 @@
     }
 
     .form {
-        margin-top: 60px;
+        height: 100%;
+        overflow: auto;
+        padding-top: 60px;
+        box-sizing: border-box;
         .fieldset {
             border: none;
             padding: 20px 40px;

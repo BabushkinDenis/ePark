@@ -6,6 +6,7 @@ import $ from 'jquery';
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactTimeWork from './timework.jsx';
+import ReactPrice from './price.jsx';
 import Event from '../event';
 class Page extends Event {
     constructor () {
@@ -14,6 +15,8 @@ class Page extends Event {
         this.wrapper = $("#page");
         this.setData();
         ReactDOM.render(<ReactTimeWork mode={"24/7"} />, document.getElementById('time-work'));
+        ReactDOM.render(<ReactPrice />, document.getElementById('price-table'));
+        
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     }
     onDeviceReady() {
@@ -27,18 +30,20 @@ class Page extends Event {
         this.wrapper.find("#fasad-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
                 this.onPhotoDataSuccess(imageData, "FASAD");
-            }, function (message){
-                alert('because: ' + message);
+            }, (message) => {
+                this.onPhotoFail(message);
             }, CAMERA_OPTION);
         });
 
         this.wrapper.find("#price-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
                 this.onPhotoDataSuccess(imageData, "PRCIE");
-            }, function (message) {
-                alert('because: ' + message);
+            }, (message) => {
+                this.onPhotoFail(message);
             }, CAMERA_OPTION);
         });
+
+
 
         this.wrapper.find("#go-back").on("click", () => {
             this.trigger("closed");
@@ -51,6 +56,18 @@ class Page extends Event {
     }
 
     onPhotoDataSuccess(imageData, namePhoto) {
+        var ft = new FileTransfer();
+        var options = new FileUploadOptions();
+        options.fileKey = "file";
+        options.fileName = "myphoto.jpg";
+        options.mimeType = "image/jpeg";
+
+        ft.upload(imageData, encodeURI("http://10.0.2.2/change/photo"), function(res){
+            alert(JSON.stringify(res))
+        }, function (err) {
+            alert(JSON.stringify(err))
+        }, options);
+
         this.data.photous[namePhoto] = imageData;
     }
 
@@ -59,58 +76,43 @@ class Page extends Event {
     }
 
 
-    show() {
-        this.wrapper.show();
-    } 
-
-    hide() {
-        this.wrapper.hide();
-    }
 
     setData(data) {
         this.data = {
             photous: {}
         };
+        console.log(data);
+
         if(data) {
             this.data.latLng = data.latLng;
-            this.wrapper.find("#addres-input").val(data.address);
+            this.data.address = data.address;
+            this.wrapper.find("#address-input").val(data.address);
         }
         return this;
     }
 
+
+
     sendData() {
-        var imageURI = this.data.photous.FASAD;
-        var formData = new FormData();
-           
-        if (!imageURI) {
-            alert('Please select an image first.');
-            return;
-        }
-        
-       
-
-        formData.append("username", "Groucho");
-        formData.append("accountnum", 123456); 
-
-        // Файл, выбранный пользователем
-        formData.append("userfile", imageURI);
-
-        // JavaScript Blob объект
-        var content = '<a id="a"><b id="b">hey!</b></a>'; // содержимое нового файла...
-        var blob = new Blob([content], { type: "text/xml" });
-
-        formData.append("webmasterfile", blob);
-
-        var request = new XMLHttpRequest();
-        request.open("POST", "http://api.epark.local/change");
-        request.send(formData);
         alert("send");
-
     }
 
     readForm () {
+        
         this.sendData();
-        //alert(JSON.stringify(this.data));
+    }
+
+
+
+
+
+
+    show() {
+        this.wrapper.animate({ top: 0 });
+    }
+
+    hide() {
+        this.wrapper.animate({ top: 1000 });
     }
     
 }
