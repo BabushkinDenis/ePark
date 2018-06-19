@@ -8,6 +8,7 @@ class TimeWorkRow extends React.Component {
         super(props);
         this.rowEnable = this.rowEnable.bind(this);
         this.rowDisable = this.rowDisable.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
         this.state = {
             enable: this.props.row.enable
         }
@@ -21,6 +22,10 @@ class TimeWorkRow extends React.Component {
         this.setState({ enable: false });
     }
 
+    onInputChange(e) {
+        this.props.onChangeTime(this.props.typeSchedule, this.props.id, e.target.name, e.target.value);
+    }
+
     render() {
         const row = this.props.row;
         return (
@@ -31,9 +36,9 @@ class TimeWorkRow extends React.Component {
                 </div>
                 <div className="TimeWork__row_inputCell">
                     <span className= {!this.state.enable ? "_hidden" : ""}>
-                        <input className="_from" value="08:00" />
+                        <input className="_from" name="from" value={row.from} onChange={this.onInputChange}/>
                         <span className="seporate"></span>
-                        <input className="_to" value="24:00" />
+                        <input className="_to" name="to" value={row.to} onChange={this.onInputChange}/>
                     </span>
                     <span className={this.state.enable ? "_hidden" : "closedPlaceholder"}> closed </span>
                 </div>
@@ -46,63 +51,70 @@ class Schedule extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            default: [{ label: "Mo-Fr" , enable: true}, { label: "Saturday" }, { label: "Sunday" }],
+            default: [{ label: "Mo-Fr", enable: true, from: "08:00", to: "24:00" }, { label: "Saturday", from: "08:00", to: "24:00" }, { label: "Sunday", from: "08:00", to: "24:00"}],
             personal: [
-                { label: "Monday", enable: true }, 
-                { label: "Tuesday", enable: true }, 
-                { label: "Wednesday", enable: true }, 
-                { label: "Thursday", enable: true }, 
-                { label: "Friday", enable: true }, 
-                { label: "Saturday", enable: true }, 
-                { label: "Sunday", enable: true }
+                { label: "Monday", enable: true , from: "08:00", to: "24:00"}, 
+                { label: "Tuesday", enable: true, from: "08:00", to: "24:00"}, 
+                { label: "Wednesday", enable: true, from: "08:00", to: "24:00"}, 
+                { label: "Thursday", enable: true, from: "08:00", to: "24:00"}, 
+                { label: "Friday", enable: true, from: "08:00", to: "24:00"}, 
+                { label: "Saturday", enable: true, from: "08:00", to: "24:00"}, 
+                { label: "Sunday", enable: true, from: "08:00", to: "24:00" }
             ],
-            typePrice: "24/7"
+            typeSchedule: "24/7"
         };
         this.initExternalListners.apply(this);
-        this.onTypePriceSelected = this.onTypePriceSelected.bind(this);
+        this.onTypeScheduleSelected = this.onTypeScheduleSelected.bind(this);
+        this.onChangeTime = this.onChangeTime.bind(this);
     }
 
     initExternalListners() {
 
     };
 
-    onTypePriceSelected(typePrice) {
-        this.setState({ typePrice: typePrice });
+    onTypeScheduleSelected(typeSchedule) {
+        this.setState({ typeSchedule: typeSchedule });
+    }
+
+    onChangeTime(typeSchedule, id, field, value) {
+        this.state[typeSchedule][id][field] = value;
+        this.setState(this.state);
     }
 
     render() {
-        const state = this.state;
-        const onTypePriceSelected = this.onTypePriceSelected;
+        let state = this.state;
+        const onTypeScheduleSelected = this.onTypeScheduleSelected;
+        const onChangeTime = this.onChangeTime;
         return (
             <div>
                
                 <div className="TimeWork__row">
-                    <span onClick={this.onTypePriceSelected.bind(null, "DEFAULT")}>
-                        <span className={state.typePrice == "DEFAULT" ? "radiobox _checked" : "radiobox"} ></span>
+                    <span onClick={this.onTypeScheduleSelected.bind(null, "DEFAULT")}>
+                        <span className={state.typeSchedule == "DEFAULT" ? "radiobox _checked" : "radiobox"} ></span>
                         <span className = "label">Default</span>
                     </span>
-                    <div className={state.typePrice == "DEFAULT" ? "_clearfix" : "_hidden"} >
+                    <div className={state.typeSchedule == "DEFAULT" ? "_clearfix" : "_hidden"} >
                         {state.default.map(function (row, key) {
-                            return <TimeWorkRow  row={row} key={key}/>
+                            return <TimeWorkRow row={row} key={key} id = {key} typeSchedule="default" onChangeTime = {onChangeTime}/>
                         })}
                     </div>
                 </div>
                
         
-                <div className="TimeWork__row" onClick={this.onTypePriceSelected.bind(null, "24/7")}>
-                    <span className={state.typePrice == "24/7" ? "radiobox _checked" : "radiobox"} ></span>
+                <div className="TimeWork__row" onClick={this.onTypeScheduleSelected.bind(null, "24/7")}>
+                    <span className={state.typeSchedule == "24/7" ? "radiobox _checked" : "radiobox"} ></span>
                     <span className="label">24/7</span>
                 </div>
             
 
                 <div className="TimeWork__row">
-                    <span onClick={this.onTypePriceSelected.bind(null, "PERSONAL")}>
-                        <span className={state.typePrice == "PERSONAL" ? "radiobox _checked" : "radiobox"} ></span>
+                    <span onClick={this.onTypeScheduleSelected.bind(null, "PERSONAL")}>
+                        <span className={state.typeSchedule == "PERSONAL" ? "radiobox _checked" : "radiobox"} ></span>
                         <span className="label">Personal</span>
                     </span>
-                    <div className={state.typePrice == "PERSONAL" ? "_clearfix" : "_hidden"} >
+                    <div className={state.typeSchedule == "PERSONAL" ? "_clearfix" : "_hidden"} >
                         {state.personal.map(function (row, key) {
-                            return <TimeWorkRow row={row} key={key} />
+                            return <TimeWorkRow row={row} key={key} id={key}  typeSchedule="personal" onChangeTime={onChangeTime}/>
                         })}
                     </div>
                 </div>

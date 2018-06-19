@@ -1,6 +1,6 @@
 import React from "react";
 import style from './price.scss';
-
+import busEvent from '../busEvent';
 
 
 class PriceRow extends React.Component {
@@ -87,6 +87,7 @@ class Price extends React.Component {
             if (i == id) { el.enable = true } return el
         });
         this.setState({ rows: rows});
+        busEvent.trigger("changedPrice", this.state);
     }
 
     onPriceDisable(id) {
@@ -94,6 +95,7 @@ class Price extends React.Component {
             if (i == id) { el.enable = false } return el
         });
         this.setState({ rows: rows });
+        busEvent.trigger("changedPrice", this.state);
     }
 
     onPriceChange(id, typePrice, value) {
@@ -101,6 +103,7 @@ class Price extends React.Component {
             if (i == id) { el[typePrice] = value } return el;
         });
         this.setState({ rows: rows });
+        busEvent.trigger("changedPrice", this.state);
     }
 
     render() {

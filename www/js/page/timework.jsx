@@ -1,6 +1,6 @@
 import React from "react";
 import style from './timework.scss';
-
+import busEvent from '../busEvent';
 
 
 class TimeWorkRow extends React.Component {
@@ -74,11 +74,13 @@ class Schedule extends React.Component {
 
     onTypeScheduleSelected(typeSchedule) {
         this.setState({ typeSchedule: typeSchedule });
+        busEvent.trigger("changedSchedule", this.state);
     }
 
     onChangeTime(typeSchedule, id, field, value) {
         this.state[typeSchedule][id][field] = value;
         this.setState(this.state);
+        busEvent.trigger("changedSchedule", this.state);
     }
 
     render() {

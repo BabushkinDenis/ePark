@@ -8,16 +8,26 @@ import ReactDOM from "react-dom";
 import ReactTimeWork from './timework.jsx';
 import ReactPrice from './price.jsx';
 import Event from '../event';
+import busEvent from '../busEvent';
 class Page extends Event {
     constructor () {
         super();
         console.log("pageInited");
         this.wrapper = $("#page");
-        this.setData();
+        
         ReactDOM.render(<ReactTimeWork mode={"24/7"} />, document.getElementById('time-work'));
         ReactDOM.render(<ReactPrice />, document.getElementById('price-table'));
         
+        
+        busEvent.on("changedSchedule", (data) => {
+            console.log(data);
+        })
+        busEvent.on("changedPrice", (data) => {
+            console.log(data);
+        })
+
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        this.setData();
     }
     onDeviceReady() {
         const CAMERA_OPTION = {
@@ -26,6 +36,8 @@ class Page extends Event {
             saveToPhotoAlbum: false,
             mediaType: Camera.MediaType.PICTURE
         }
+
+
 
         this.wrapper.find("#fasad-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
@@ -42,7 +54,6 @@ class Page extends Event {
                 this.onPhotoFail(message);
             }, CAMERA_OPTION);
         });
-
 
 
         this.wrapper.find("#go-back").on("click", () => {

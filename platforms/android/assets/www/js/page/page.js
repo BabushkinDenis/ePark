@@ -6,6 +6,7 @@ import $ from 'jquery';
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactTimeWork from './timework.jsx';
+import ReactPrice from './price.jsx';
 import Event from '../event';
 class Page extends Event {
     constructor () {
@@ -14,6 +15,8 @@ class Page extends Event {
         this.wrapper = $("#page");
         this.setData();
         ReactDOM.render(<ReactTimeWork mode={"24/7"} />, document.getElementById('time-work'));
+        ReactDOM.render(<ReactPrice />, document.getElementById('price-table'));
+        
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     }
     onDeviceReady() {
