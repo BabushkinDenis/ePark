@@ -22,6 +22,7 @@
 
 
 .Page {
+    display: block;
     width: 100%;
     height: 100%;
     background: white;
@@ -105,6 +106,23 @@
             button {
                 width: 100%;
                 height: 36px;
+                position: relative;
+
+                &._sending_fasad {
+                    background: #cedde1;
+                }
+
+                &._sending_price {
+                    background: #cedde1;
+
+                    &:after {
+                        content: "sending photo please whait";
+                        display: block;
+                        background:  #cedde1;
+                        position: absolute;
+                        top: 10px;
+                    }
+                }
             }
 
             input._default {

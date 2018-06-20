@@ -36,7 +36,8 @@ body, html {
 .app {
     height: 100%;
     width: 100%;     
-    overflow: hidden;                         /* offset horizontal: half of text area width */
+    overflow: hidden;  
+    display: block !important;                       /* offset horizontal: half of text area width */
 }
 
 /* Landscape layout (with min-width) */
@@ -55,6 +56,7 @@ input, textarea, select {
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;
+    background: white;
 }
 
 button {
@@ -144,6 +146,7 @@ span.checkbox {
     }
 
 }
+
 
 
 

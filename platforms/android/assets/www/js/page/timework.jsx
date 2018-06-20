@@ -95,7 +95,22 @@ class Schedule extends React.Component {
     }
 
     initExternalListners() {
-
+        busEvent.on("timework:reset", ()=>{
+            this.setState({
+                default: [{ label: "Mo-Fr", enable: true, from: "08:00", to: "21:00", name: "mon,tue,wd,th,ft" }, { label: "Saturday", from: "08:00", to: "14:00", name: "st" }, { label: "Sunday", from: "08:00", to: "14:00", name: "sn" }, { label: "holliday", enable: false, from: "08:00", to: "14:00", name: "holliday" }],
+                personal: [
+                    { label: "Monday", enable: true, from: "08:00", to: "24:00", name: "mon" },
+                    { label: "Tuesday", enable: true, from: "08:00", to: "24:00", name: "tue" },
+                    { label: "Wednesday", enable: true, from: "08:00", to: "24:00", name: "wd" },
+                    { label: "Thursday", enable: true, from: "08:00", to: "24:00", name: "th" },
+                    { label: "Friday", enable: true, from: "08:00", to: "24:00", name: "fr" },
+                    { label: "Saturday", enable: true, from: "08:00", to: "24:00", name: "st" },
+                    { label: "Sunday", enable: true, from: "08:00", to: "24:00", name: "sn" },
+                    { label: "holliday", enable: false, from: "08:00", to: "14:00", name: "holliday" }
+                ],
+                typeSchedule: "24/7"
+            });
+        })
     };
 
     onScheduleRowEnable(typeSchedule, id){

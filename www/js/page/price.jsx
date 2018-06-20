@@ -83,7 +83,32 @@ class Price extends React.Component {
     }
 
     initExternalListners() {
-
+        busEvent.on("price:reset", () => {
+            this.setState({
+                rows: [{
+                    type: "sedan",
+                    name: "car",
+                    price_1: "",
+                    price_2: "",
+                    price_3: "",
+                    enable: true
+                }, {
+                    type: "suv",
+                    name: "jeep",
+                    price_1: "",
+                    price_2: "",
+                    price_3: "",
+                    enable: false
+                }, {
+                    type: "moto",
+                    name: "moto",
+                    price_1: "",
+                    price_2: "",
+                    price_3: "",
+                    enable: false
+                }]
+            });
+        });
     };
 
     onPriceEnable(id) {

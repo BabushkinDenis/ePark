@@ -19,7 +19,7 @@ class Page extends Event {
             photos: {}
    
         };
-        this.serverUrl = "https://egrn-reestr.ru";
+        this.serverUrl = "https://egrn-reestr.ru"; //"http://10.0.2.2"
         
         busEvent.on("changedSchedule", (data) => {
             this.data.schedule = data;
@@ -87,7 +87,10 @@ class Page extends Event {
             this.data.suggested_address = e.target.value;
         })
 
-        this.wrapper.find("#send-data").on("click", () => {
+        this.wrapper.find("#send-data").on("click", (e) => {
+            if ($(e.target).hasClass('_sending_fasad') || $(e.target).hasClass('_sending_price')) {
+                return;
+            }
             this.sendData();
         })
 
@@ -101,6 +104,7 @@ class Page extends Event {
         options.fileName = "myphoto.jpg";
         options.mimeType = "image/jpeg";
 
+        this.wrapper.find("#send-data").addClass("_sending_" + namePhoto);
         ft.upload(imageData, encodeURI(this.serverUrl + "/change/photo"), (res) => {
             
             if(res.responseCode == 200) {
@@ -108,8 +112,10 @@ class Page extends Event {
             } else {
                 alert(JSON.stringify(res))
             }
-        }, function (err) {
+            this.wrapper.find("#send-data").removeClass("_sending_" + namePhoto);
+        }, (err) => {
             alert(JSON.stringify(err))
+            this.wrapper.find("#send-data").removeClass("_sending_" + namePhoto);
         }, options);
     }
 
@@ -175,15 +181,24 @@ class Page extends Event {
             type: 'POST',
             data: data,
             crossDomain: true,
-            success: function (res) {
-                alert(res);
+            success: (res) => {
+                this.onSuccessAdd();
             },
             error: function (err) {
-                alert(err);
+                alert(JSON.stringify(err));
             }
         })
     }
+    onSuccessAdd() {
+        busEvent.trigger("timework:reset");
+        busEvent.trigger("price:reset");
+        this.wrapper.find("#phone-input").val("");
+        this.wrapper.find("#comment-textarea").val("");
+        this.wrapper.find("#address-input").val("");
+        this.hide();
 
+        alert("parking success add");
+    }
 
     show() {
         this.wrapper.animate({ top: 0 });
