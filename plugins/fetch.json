@@ -34,7 +34,7 @@
   "cordova-plugin-file": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-file@~4.3.3"
+      "id": "cordova-plugin-file@latest"
     },
     "is_top_level": true,
     "variables": {}
@@ -108,7 +108,15 @@
   "cordova-plugin-file-transfer": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-file-transfer@^1.7.1"
+      "id": "cordova-plugin-file-transfer@latest"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@latest"
     },
     "is_top_level": true,
     "variables": {}

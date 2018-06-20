@@ -34,11 +34,7 @@ var app = {
 
     bindEvents: function() {
         this.map.on("geoLocationConfirned", (data) => {
-            this.page
-                .setData(data)
-                .show();
-
-            //this.map.hide();
+            this.page.show();
         });
 
         this.page.on("closed", () => {

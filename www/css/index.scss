@@ -46,12 +46,12 @@ body, html {
     }
 }
 
-input {
+input, select {
     height: 36px;
     border: 1px solid $blue;
 }
 
-input, textarea {
+input, textarea, select {
     padding-left: 20px;
     padding-right: 20px;
     box-sizing: border-box;

@@ -86,7 +86,13 @@ $black: #1c2123;
                 padding-left: 10px;
                 padding-right: 10px;
             }
-         
+            select {
+                width: 40% !important;
+                margin-bottom: 10px;
+                text-align: center;
+                padding-left: 5px;
+                padding-right: 5px;  
+            }
         }
     }
 }

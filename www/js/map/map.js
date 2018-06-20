@@ -3,7 +3,7 @@ import style from './map.scss';
 import $ from 'jquery';
 
 import Event from '../event';
-
+import busEvent from '../busEvent';
 //const CONFIRM = "CONFIRM";
 
 
@@ -25,8 +25,7 @@ class Map extends Event  {
 
         this.SDK.on(plugin.google.maps.event.CAMERA_MOVE_END, (latLng) => {
             if(this.mode == "CONFIRM") {
-                this.data.latLng = latLng.target;
-                
+              
                 plugin.google.maps.Geocoder.geocode({
                     "position": latLng.target
                 }, (results) => {
@@ -44,8 +43,17 @@ class Map extends Event  {
                         //results[0].country || ""
                     ].join(", ");
 
-                    this.data.address = address;
 
+                    busEvent.trigger("changedLocation", {
+                        latLng: latLng.target,
+                        //latLngPedro: _latLngPedro;
+                        address: {
+                            latLng: results[0].position,
+                            string: address
+                        },
+                        time: Math.round((new Date()).getTime() / 1000)
+                    });
+                    
                     $("#confirm-address-location").html(address);
                 });
             }
@@ -58,7 +66,7 @@ class Map extends Event  {
 
         $("#confirm-address").on("click", () => {
             this.switchMode("MAIN");
-            this.trigger("geoLocationConfirned", this.data);
+            this.trigger("geoLocationConfirned");
         });
     }
 

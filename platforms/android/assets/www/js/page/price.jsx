@@ -1,6 +1,6 @@
 import React from "react";
 import style from './price.scss';
-
+import busEvent from '../busEvent';
 
 
 class PriceRow extends React.Component {
@@ -34,13 +34,13 @@ class PriceRow extends React.Component {
                     <span className="icon-dolla"></span>
                 </td>
                 <td>
-                    <input type="" name="price_1" value={row.price_1} onChange={this.onChangeValue} className="costHour" />
+                    <input type="" name="price_1" value={row.price_1} onChange={this.onChangeValue} className="costHour" type="number"  />
                 </td>
                 <td>
-                    <input type="" name="price_2" value={row.price_2} onChange={this.onChangeValue}  className="costHour" />
+                    <input type="" name="price_2" value={row.price_2} onChange={this.onChangeValue} className="costHour" type="number" />
                 </td>
                 <td>
-                    <input type="" name="price_3" value={row.price_3} onChange={this.onChangeValue}  className="costHour" />
+                    <input type="" name="price_3" value={row.price_3} onChange={this.onChangeValue} className="costHour" type="number" />
                 </td>
             </tr>
         );
@@ -53,18 +53,21 @@ class Price extends React.Component {
         this.state = {
             rows: [{
                 type: "sedan",
+                name: "car",
                 price_1: "",
                 price_2: "",
                 price_3: "",
                 enable: true
             }, {
                 type: "suv",
+                name: "jeep",
                 price_1: "",
                 price_2: "",
                 price_3: "",
                 enable: false
             }, {
                 type: "moto",
+                name: "moto",
                 price_1: "",
                 price_2: "",
                 price_3: "",
@@ -76,6 +79,7 @@ class Price extends React.Component {
         this.onPriceEnable = this.onPriceEnable.bind(this);
         this.onPriceDisable = this.onPriceDisable.bind(this);
         this.onPriceChange = this.onPriceChange.bind(this);
+        busEvent.trigger("changedPrice", this.state);
     }
 
     initExternalListners() {
@@ -87,6 +91,7 @@ class Price extends React.Component {
             if (i == id) { el.enable = true } return el
         });
         this.setState({ rows: rows});
+        busEvent.trigger("changedPrice", this.state);
     }
 
     onPriceDisable(id) {
@@ -94,6 +99,7 @@ class Price extends React.Component {
             if (i == id) { el.enable = false } return el
         });
         this.setState({ rows: rows });
+        busEvent.trigger("changedPrice", this.state);
     }
 
     onPriceChange(id, typePrice, value) {
@@ -101,6 +107,7 @@ class Price extends React.Component {
             if (i == id) { el[typePrice] = value } return el;
         });
         this.setState({ rows: rows });
+        busEvent.trigger("changedPrice", this.state);
     }
 
     render() {

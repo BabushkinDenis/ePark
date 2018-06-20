@@ -48,6 +48,9 @@
     },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "epark.online"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "epark.online"
     }
   },
   "dependent_plugins": {}
