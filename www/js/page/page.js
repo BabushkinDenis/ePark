@@ -19,8 +19,9 @@ class Page extends Event {
             photos: {}
    
         };
-        this.serverUrl = "https://egrn-reestr.ru"; //"http://10.0.2.2"
-        
+        //this.serverUrl = "http://10.0.2.2"; 
+        this.serverUrl = "https://egrn-reestr.ru"; 
+
         busEvent.on("changedSchedule", (data) => {
             this.data.schedule = data;
             //console.log(data);
@@ -45,6 +46,8 @@ class Page extends Event {
     }
     onDeviceReady() {
         const CAMERA_OPTION = {
+            quality: 70,
+            correctOrientation: true,
             destinationType: navigator.camera.DestinationType.FILE_URI,  //DATA_URL,
             sourceType: Camera.PictureSourceType.CAMERA,
             saveToPhotoAlbum: false,
@@ -52,9 +55,9 @@ class Page extends Event {
         }
 
 
-
         this.wrapper.find("#fasad-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
+                this.wrapper.find("#fasad-photo-btn").addClass("_complet");
                 this.onPhotoDataSuccess(imageData, "fasad");
             }, (message) => {
                 this.onPhotoFail(message);
@@ -63,6 +66,7 @@ class Page extends Event {
 
         this.wrapper.find("#price-photo-btn").on("click", () => {
             navigator.camera.getPicture((imageData) => {
+                this.wrapper.find("#price-photo-btn").addClass("_complet");
                 this.onPhotoDataSuccess(imageData, "price");
             }, (message) => {
                 this.onPhotoFail(message);
@@ -177,7 +181,7 @@ class Page extends Event {
         console.log(data);
 
         $.ajax({
-            url: this.serverUrl + "/change",
+            url: this.serverUrl + "/change?user_id=60495d9",
             type: 'POST',
             data: data,
             crossDomain: true,
@@ -195,13 +199,19 @@ class Page extends Event {
         this.wrapper.find("#phone-input").val("");
         this.wrapper.find("#comment-textarea").val("");
         this.wrapper.find("#address-input").val("");
+        this.wrapper.find("#price-photo-btn").removeClass("_complet");
+        this.wrapper.find("#fasad-photo-btn").removeClass("_complet");
+        
         this.hide();
 
+
+        navigator.camera.cleanup();
         alert("parking success add");
     }
 
     show() {
         this.wrapper.animate({ top: 0 });
+        this.wrapper.find(".form").scrollTop(0);
     }
 
     hide() {

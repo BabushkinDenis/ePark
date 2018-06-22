@@ -1,7 +1,7 @@
 
 import style from './map.scss';
 import $ from 'jquery';
-
+import _ from 'underscore'
 import Event from '../event';
 import busEvent from '../busEvent';
 //const CONFIRM = "CONFIRM";
@@ -53,7 +53,7 @@ class Map extends Event  {
                         },
                         time: Math.round((new Date()).getTime() / 1000)
                     });
-                    
+
                     $("#confirm-address-location").html(address);
                 });
             }
@@ -68,7 +68,65 @@ class Map extends Event  {
             this.switchMode("MAIN");
             this.trigger("geoLocationConfirned");
         });
+
+        this.initState();
     }
+
+
+    initState() {
+        $.ajax({
+            url: "https://egrn-reestr.ru/parking",
+            type: 'GET',
+            crossDomain: true,
+            success: (res) => {
+                _.each(res, (item) => {
+                    if (item.lat == "-" || item.lng == "-") {
+                        return false
+                    }
+                    var canvas = document.createElement('canvas');
+                        canvas.width = 100;
+                        canvas.height = 70;
+                    var context = canvas.getContext('2d');
+                    var map = this.SDK;
+
+                    var img = new Image();
+                        img.src = item.photo;
+                        img.onload = function () {
+                            context.drawImage(img, 0, 0);
+                            // context.font = '9pt Calibri';
+                            // context.fillStyle = 'black';
+                            // context.fillText(item.address,0, 80);
+         
+                            var marker = map.addMarker({
+                                'position': { lat: item.lat, lng: item.lng },
+                                'title': canvas.toDataURL(),
+                                'snippet': item.address
+                            });
+                        };
+
+                    // var marker = this.SDK.addMarker({
+                    //     position: { lat: item.lat, lng: item.lng},
+                    //     title: item.address,
+                    //     snippet: item.comment
+                    // })
+
+                    // marker.on(plugin.google.maps.event.MARKER_CLICK, function () {
+                    //      var htmlInfoWindow = new plugin.google.maps.HtmlInfoWindow();
+                    //      htmlInfoWindow.setContent("<div>TEST</div>");
+                    //      htmlInfoWindow.open(marker);
+                    // });
+
+                    });
+
+            },
+            error: function (err) {
+                alert(JSON.stringify(err));
+            }
+        })
+       
+
+    }
+
 
     showMyPosition() {
         let option = {
