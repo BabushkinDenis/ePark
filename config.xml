@@ -29,4 +29,6 @@
         <variable name="API_KEY_FOR_IOS" value="(API_KEY_FOR_IOS)" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    
+    <preference name="phonegap-version" value="cli-7.1.0" />
 </widget>
